@@ -5,6 +5,7 @@
 // Purpose: Create an adjacency list
 // Notices:
 //     1. No protection against repeat edges; be careful when using for direct user interactions
+//     2. Can only form adjacency lists from vectors
 // 
 
 #pragma once
