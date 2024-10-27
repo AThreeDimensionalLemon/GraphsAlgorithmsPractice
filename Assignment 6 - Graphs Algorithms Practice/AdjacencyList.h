@@ -18,7 +18,11 @@ template<typename T>
 class AdjacencyList
 {
 private:
-    map<T, vector<pair<T, int>>> list;
+    map<T, //Vertex is map key
+        vector< //List of vertex's edges is map value
+        pair<T, //Edge is first pair value
+        int //Weight is second pair value
+        >>> list;
     bool isDirected;
 
 public:
