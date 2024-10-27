@@ -3,6 +3,8 @@
 // Author: Eisig Liang
 // Last update: 27 October 2024
 // Purpose: Create an adjacency list
+// Notices:
+//     1. No protection against repeat edges; be careful when using for direct user interactions
 // 
 
 #pragma once
@@ -17,25 +19,29 @@ class AdjacencyList
 {
 private:
     map<T, vector<pair<T, int>>> list;
+    bool isDirected;
 
 public:
-    AdjacencyList(vector<T> vertices);
+    AdjacencyList(vector<T> vertices, bool isDirected = false);
     void addEdge(T source, T target, int weight = 1); 
     map<T, vector<pair<T, int>>> getList();
 };
 
 template<typename T>
-AdjacencyList<T>::AdjacencyList(vector<T> vertices) {
+AdjacencyList<T>::AdjacencyList(vector<T> vertices, bool inIsDirected) {
 
     for (T vertex : vertices) {
         vector<pair<T, int>> vertexVector;
         list.insert({ vertex, vertexVector });
     }
+
+    isDirected = inIsDirected;
 }
 
 template<typename T>
 void AdjacencyList<T>::addEdge(T source, T target, int weight) {
     list[source].push_back(make_pair(target, weight));
+    if (not isDirected) list[target].push_back(make_pair(source, weight));
 }
 
 template<typename T>
