@@ -6,7 +6,9 @@
 //
 
 #include <iostream>
-#include <list>
+#include <vector>
+#include <map>
+#include <limits>
 #include "AdjacencyList.h"
 using namespace std;
 
@@ -37,19 +39,25 @@ int main() { // Test algorithms' implementations
     // Test djikstrasAlgorithm()
 
     // Set up adjacency list
-    AdjacencyList<char> djikstrasList(vector<char> {'S', 'A', 'B', 'C', 'D', 'E', 'F', 'G'});
-    djikstrasList.addEdge('S', 'A', 5);
-    djikstrasList.addEdge('S', 'B', 4);
-    djikstrasList.addEdge('A', 'B', 1);
-    djikstrasList.addEdge('A', 'D', 3);
-    djikstrasList.addEdge('B', 'C', 4);
-    djikstrasList.addEdge('B', 'E', 5);
-    djikstrasList.addEdge('C', 'E', 14);
-    djikstrasList.addEdge('C', 'F', 3);
-    djikstrasList.addEdge('C', 'G', 8);
-    djikstrasList.addEdge('D', 'E', 2);
-    djikstrasList.addEdge('D', 'F', 7);
-    djikstrasList.addEdge('D', 'G', 12);
-    djikstrasList.addEdge('E', 'F', 10);
-    djikstrasList.addEdge('F', 'G', 4);
+    char vertexNames[8] = { 'S', 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
+    vector<pair<char, int>> vertices;
+    for (char name : vertexNames) vertices.push_back(make_pair(name, numeric_limits<int>::max()));
+    //map<char, int> distance;
+    //for (char vertex : vertices) distance.insert({ vertex, numeric_limits<int>::max() });
+
+    AdjacencyList<pair<char, int>> djikstrasList(vertices);
+    djikstrasList.addEdge(vertices[0], vertices[1], 5);
+    djikstrasList.addEdge(vertices[0], vertices[2], 4);
+    djikstrasList.addEdge(vertices[1], vertices[2], 1);
+    djikstrasList.addEdge(vertices[1], vertices[4], 3);
+    djikstrasList.addEdge(vertices[2], vertices[3], 4);
+    djikstrasList.addEdge(vertices[2], vertices[5], 5);
+    djikstrasList.addEdge(vertices[3], vertices[5], 14);
+    djikstrasList.addEdge(vertices[3], vertices[6], 3);
+    djikstrasList.addEdge(vertices[3], vertices[7], 8);
+    djikstrasList.addEdge(vertices[4], vertices[5], 2);
+    djikstrasList.addEdge(vertices[4], vertices[6], 7);
+    djikstrasList.addEdge(vertices[4], vertices[7], 12);
+    djikstrasList.addEdge(vertices[5], vertices[6], 10);
+    djikstrasList.addEdge(vertices[6], vertices[7], 4);
 }
