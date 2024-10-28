@@ -1,42 +1,60 @@
 // 
 // Name: main.cpp
 // Author: Eisig Liang
-// Last update: 27 October 2024
+// Last update: 28 October 2024
 // Purpose: Implement and test Prim's and Djikstra's Algorithms
 //
 
 #include <iostream>
 #include <vector>
 #include <map>
-#include <tuple>
 #include <limits>
 #include "AdjacencyList.h"
 using namespace std;
 
-map<char, vector<char>> primsAlgorithm(map<char, vector<tuple<char, int, bool>>>adjacencyList) {
+map<char, vector<char>> primsAlgorithm(map<char, map<char, typename AdjacencyList<char>::edge>>adjacencyList) {
     vector<char> visitedVertices;
     map<char, vector<char>> mst;
-    visitedVertices.push_back('A'); //First vertex
+    vector<char> connectedVertices;
 
-    while (true) { //Iterate until all vertices are visited
+    //Add first vertex
+    visitedVertices.push_back('A'); 
+    mst.insert({ 'A', connectedVertices });
+    for (auto vertex : adjacencyList['A']) {
+        vertex.second.isVisited = true;
+        adjacencyList[vertex.first]['A'].isVisited = true;
+    }
+
+    while (true) {
         int leastWeight = numeric_limits<int>::max();
-        tuple<char, int, bool> leastWeightVertex;
+        char lightestVertex, lastVertex;
 
-        for (char visitingVertex : visitedVertices) { //Find least weighted edge within tree
+        for (auto visitingVertex : visitedVertices) { //Iterate through tree
 
-            for (tuple<char, int, bool> vertex : adjacencyList[visitingVertex]) { //Find least weighted edge within vertex
+            for (auto connectedVertex : adjacencyList[visitingVertex]) { //Iterate through edges
 
-                if (get<2>(vertex) == false and //Ignore visited vertices
-                    get<1>(vertex) < leastWeight) //Weight is less than previously checked weights
+                if (connectedVertex.second.isVisited == false and 
+                    connectedVertex.second.weight < leastWeight)
                 {
-                    leastWeight = get<1>(vertex);
-                    leastWeightVertex = vertex;
+                    leastWeight = connectedVertex.second.weight;
+                    lightestVertex = connectedVertex.first;
+                    lastVertex = visitingVertex;
                 }
             }
         }
 
-        get<2>(leastWeightVertex) = true; //Mark leastWeightVertex as visited
+        //Update isVisited variables
+        for (auto connectedVertex : adjacencyList[lightestVertex]) //I don't wanna refactor ;(
+            adjacencyList[connectedVertex.first][lightestVertex].isVisited = true;
+        adjacencyList[lightestVertex][lastVertex].isVisited = true;
 
+        //Update tree
+        mst[lastVertex].push_back(lightestVertex);
+        if (mst.find(lightestVertex) == mst.end()) mst.insert({ lightestVertex, connectedVertices });
+        mst[lightestVertex].push_back(lastVertex);
+
+        //Base case
+        visitedVertices.push_back(lightestVertex);
         if (visitedVertices.size() == adjacencyList.size()) return mst;
     }
 }
@@ -62,14 +80,21 @@ int main() { // Test algorithms' implementations
     primsList.addEdge('D', 'F', 8);
 
     // Test algorithm
-    //map<char, vector<char>> mst(primsAlgorithm(primsList.getList()));
+    cout << "Testing primsAlgorithm():" << endl;
+    map<char, vector<char>> primsMst(primsAlgorithm(primsList.getList()));
+    cout << "Minimum spanning tree formed by Prim's Algorithm:" << endl;
+    cout << "Source:    Target:" << endl;
+    cout << "-------    -------" << endl;
+    for (auto source : primsMst) 
+        for (auto target : primsMst[source.first])
+            cout << source.first << "          " << target << endl;
 
     // Test djikstrasAlgorithm()
 
     // Set up adjacency list
     char vertexNames[8] = { 'S', 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
     vector<pair<char, int>> vertices;
-    for (char name : vertexNames) vertices.push_back(make_pair(name, numeric_limits<int>::max()));
+    for (auto name : vertexNames) vertices.push_back(make_pair(name, numeric_limits<int>::max()));
 
     AdjacencyList<pair<char, int>> djikstrasList(vertices);
     djikstrasList.addEdge(vertices[0], vertices[1], 5);
