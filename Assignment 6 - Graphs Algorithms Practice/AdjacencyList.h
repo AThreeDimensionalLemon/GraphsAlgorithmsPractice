@@ -13,35 +13,35 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include <tuple>
 using namespace std;
 
 template<typename T>
 class AdjacencyList
 {
-protected:
+public: //Won't be a security issue; only being used as a template
     struct edge {
-        T connectedVertex; //Not a key because too much refactoring before deadline
         int weight;
         bool isVisited;
     };
 
 private:
-    map<T, vector<edge>> list;
+    map<T, //Vertex
+        map<T, //Connected vertex
+        edge>> list;
     bool isDirected;
 
 public:
     AdjacencyList(vector<T> vertices, bool isDirected = false);
     void addEdge(T source, T target, int weight = 1); 
-    map<T, vector<edge>> getList();
+    map<T, map<T, edge>> getList();
 };
 
 template<typename T>
 AdjacencyList<T>::AdjacencyList(vector<T> vertices, bool inIsDirected) {
 
     for (T vertex : vertices) {
-        vector<edge> vertexVector;
-        list.insert({ vertex, vertexVector });
+        map<T, edge> edgesMap;
+        list.insert({ vertex, edgesMap });
     }
 
     isDirected = inIsDirected;
@@ -49,16 +49,16 @@ AdjacencyList<T>::AdjacencyList(vector<T> vertices, bool inIsDirected) {
 
 template<typename T>
 void AdjacencyList<T>::addEdge(T source, T target, int weight) {
-    edge sourceTargetEdge{ target, weight, false };
-    list[source].push_back(sourceTargetEdge);
+    edge sourceTargetEdge{ weight, false };
+    list[source][target] = sourceTargetEdge;
 
     if (not isDirected) {
-        edge targetSourceEdge{ source, weight, false };
-        list[target].push_back(targetSourceEdge);
+        edge targetSourceEdge{ weight, false };
+        list[target][source] = targetSourceEdge;
     }
 }
 
 template<typename T>
-map<T, vector<typename AdjacencyList<T>::edge>> AdjacencyList<T>::getList() {
+map<T, map<T, typename AdjacencyList<T>::edge>> AdjacencyList<T>::getList() {
     return list;
 }
