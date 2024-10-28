@@ -6,7 +6,7 @@
 // Notices:
 //     1. No protection against repeat edges; be careful when using for direct user interactions
 //     2. Can only form adjacency lists from vectors
-//     3. Modified for Prims and Djikstra's Algorithms; use for other algorithms unstable
+//     3. Modified for Prims and Djikstra's Algorithms; use for other algorithms untested
 // 
 
 #pragma once
@@ -19,26 +19,28 @@ using namespace std;
 template<typename T>
 class AdjacencyList
 {
+protected:
+    struct edge {
+        T connectedVertex; //Not a key because too much refactoring before deadline
+        int weight;
+        bool isVisited;
+    };
+
 private:
-    map<T, //Vertex is map key
-        vector< //List of vertex's edges is map value
-        tuple<T, //Edge is first tuple value
-        int, //Weight is second tuple value
-        bool //Visit status is third tuple value
-        >>> list;
+    map<T, vector<edge>> list;
     bool isDirected;
 
 public:
     AdjacencyList(vector<T> vertices, bool isDirected = false);
     void addEdge(T source, T target, int weight = 1); 
-    map<T, vector<tuple<T, int, bool>>> getList();
+    map<T, vector<edge>> getList();
 };
 
 template<typename T>
 AdjacencyList<T>::AdjacencyList(vector<T> vertices, bool inIsDirected) {
 
     for (T vertex : vertices) {
-        vector<tuple<T, int, bool>> vertexVector;
+        vector<edge> vertexVector;
         list.insert({ vertex, vertexVector });
     }
 
@@ -47,11 +49,16 @@ AdjacencyList<T>::AdjacencyList(vector<T> vertices, bool inIsDirected) {
 
 template<typename T>
 void AdjacencyList<T>::addEdge(T source, T target, int weight) {
-    list[source].push_back(make_tuple(target, weight, false));
-    if (not isDirected) list[target].push_back(make_tuple(source, weight, false));
+    edge sourceTargetEdge{ target, weight, false };
+    list[source].push_back(sourceTargetEdge);
+
+    if (not isDirected) {
+        edge targetSourceEdge{ source, weight, false };
+        list[target].push_back(targetSourceEdge);
+    }
 }
 
 template<typename T>
-map<T, vector<tuple<T, int, bool>>> AdjacencyList<T>::getList() {
+map<T, vector<typename AdjacencyList<T>::edge>> AdjacencyList<T>::getList() {
     return list;
 }
