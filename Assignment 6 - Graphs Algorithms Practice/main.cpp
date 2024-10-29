@@ -61,46 +61,9 @@ map<char, vector<char>> primsAlgorithm(map<char, map<char, typename AdjacencyLis
     }
 }
 
-struct djikstra {
-    char vertex;
-    int distance;
-    bool isVisited; //Method in primsAlgorithm() is boilerplate-y; dropping for this method
-};
-
-//map<char, int> djikstrasAlgorithm(map<djikstra, map<djikstra, typename AdjacencyList<djikstra>::edge>>adjacencyList, vector<djikstra> inVertices) {
-//    map<char, djikstra> vertices;
-//    for (auto inVertex : inVertices) vertices.insert({ inVertex.vertex, inVertex });
-//
-//    //Mark first vertex (S)
-//    vertices['S'].isVisited = true;
-//    vertices['S'].distance = 0;
-//    djikstra current = vertices['S'];
-//    
-//    for (int i = 0; i < vertices.size(); i++) {
-//        int smallestDistance = numeric_limits<int>::max();
-//        djikstra closestVertex;
-//
-//
-//
-//        //for (auto visitingVertex : adjacencyList[current]) { //Update distance if shorter path found
-//
-//        //    if (vertices[visitingVertex.first.vertex].distance > current.distance + visitingVertex.second.weight)
-//        //        vertices[visitingVertex.first.vertex].distance = current.distance + visitingVertex.second.weight;
-//        //}
-//
-//        //for (auto visitingVertex : adjacencyList[current]) { //Find shortest distance and update
-//
-//        //    if (vertices[visitingVertex.first.vertex].distance < smallestDistance and
-//        //        vertices[visitingVertex.first.vertex].isVisited == false)
-//        //    {
-//        //        closestVertex = vertices[visitingVertex.first.vertex];
-//        //    }
-//        //}
-//
-//        //vertices[closestVertex.vertex].isVisited = true;
-//        //current = vertices[closestVertex.vertex];
-//    }
-//}
+void djikstrasAlgorithm() {
+    
+}
 
 int main() { // Test algorithms' implementations
 
@@ -138,7 +101,7 @@ int main() { // Test algorithms' implementations
         vertices.push_back(vertex);
     }
 
-    DjikstraAdjacencyList djikstrasList(vertices);
+    AdjacencyList djikstrasList(vertices);
     //djikstrasList.addEdge(vertices[0], vertices[1], 5);
     //djikstrasList.addEdge(vertices[0], vertices[2], 4);
     //djikstrasList.addEdge(vertices[1], vertices[2], 1);

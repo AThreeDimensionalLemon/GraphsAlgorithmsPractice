@@ -6,6 +6,7 @@
 // Notices:
 //     1. Carries the same issues as its parent class
 //     2. Built purely for completing the assignment; usage for other graph algorithms not tested
+//     3. This was harder than making those linked lists. No wonder I see memes hating on C. 
 // 
 
 #pragma once
@@ -14,11 +15,6 @@
 #include <vector>
 using namespace std;
 
-struct djikstra {
-    char vertex;
-    int distance;
-    bool isVisited; //Method in primsAlgorithm() is boilerplate-y; dropping for this method
-};
 
 class DjikstraAdjacencyList
 {
@@ -26,6 +22,11 @@ public: //Won't be a security issue; only being used as a template
     struct edge {
         int weight;
         bool isVisited;
+    };
+    struct djikstra {
+        char vertex;
+        int distance;
+        bool isVisited; //Method in primsAlgorithm() is boilerplate-y; dropping for this method
     };
 
 protected:
