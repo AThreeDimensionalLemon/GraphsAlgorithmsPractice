@@ -23,5 +23,8 @@
     <ClInclude Include="AdjacencyList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DjikstraAdjacencyList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

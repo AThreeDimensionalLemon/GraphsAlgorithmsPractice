@@ -7,6 +7,8 @@
 //     1. No protection against repeat edges; be careful when using for direct user interactions
 //     2. Can only form adjacency lists from vectors
 //     3. Modified for Prims and Djikstra's Algorithms; use for other algorithms untested
+// Potential improvements:
+//     1. Make edge structs point to vertices instead of vertices pointing to other vertices
 // 
 
 #pragma once
@@ -24,7 +26,7 @@ public: //Won't be a security issue; only being used as a template
         bool isVisited;
     };
 
-private:
+protected:
     map<T, //Vertex
         map<T, //Connected vertex
         edge>> list;
