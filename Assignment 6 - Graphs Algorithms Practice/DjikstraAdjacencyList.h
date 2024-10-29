@@ -7,6 +7,7 @@
 //     1. Carries the same issues as its parent class
 //     2. Built purely for completing the assignment; usage for other graph algorithms not tested
 //     3. This was harder than making those linked lists. No wonder I see memes hating on C. 
+//     4. I'm not using this anymore.
 // 
 
 #pragma once

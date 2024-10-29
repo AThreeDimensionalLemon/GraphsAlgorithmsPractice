@@ -1,14 +1,15 @@
 // 
 // Name: main.cpp
 // Author: Eisig Liang
-// Last update: 27 October 2024
+// Last update: 28 October 2024
 // Purpose: Create an adjacency list
 // Notices:
 //     1. No protection against repeat edges; be careful when using for direct user interactions
 //     2. Can only form adjacency lists from vectors
 //     3. Modified for Prims and Djikstra's Algorithms; use for other algorithms untested
 // Potential improvements:
-//     1. Make edge structs point to vertices instead of vertices pointing to other vertices
+//     1. Make edge structs point to vertices instead of vertices pointing to other vertices (no, absolutely do not do that)
+//     2. Use lists instead of vectors to allow for traversal
 // 
 
 #pragma once

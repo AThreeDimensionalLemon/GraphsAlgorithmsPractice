@@ -2,11 +2,10 @@
 // Name: main.cpp
 // Author: Eisig Liang
 // Last update: 28 October 2024
-// Purpose: Implement and test Prim's and Djikstra's Algorithms 
+// Purpose: Implement and test Prim's and Djikstra's Algorithms
 //
 
 #include "AdjacencyList.h"
-#include "DjikstraAdjacencyList.h"
 #include <iostream>
 #include <vector>
 #include <map>
@@ -27,7 +26,7 @@ map<char, vector<char>> primsAlgorithm(map<char, map<char, typename AdjacencyLis
         adjacencyList[vertex.first]['A'].isVisited = true;
     }
 
-    while (true) {
+    while (visitedVertices.size() < adjacencyList.size()) {
         int leastWeight = numeric_limits<int>::max();
         char lightestVertex, lastVertex;
 
@@ -54,15 +53,44 @@ map<char, vector<char>> primsAlgorithm(map<char, map<char, typename AdjacencyLis
         mst[lastVertex].push_back(lightestVertex);
         if (mst.find(lightestVertex) == mst.end()) mst.insert({ lightestVertex, connectedVertices });
         mst[lightestVertex].push_back(lastVertex);
-
-        //Base case
         visitedVertices.push_back(lightestVertex);
-        if (visitedVertices.size() == adjacencyList.size()) return mst;
     }
+
+    return mst;
 }
 
-void djikstrasAlgorithm() {
-    
+map<char, int> djikstrasAlgorithm(map<tuple<char, int, bool>, map<tuple<char, int, bool>, typename AdjacencyList<tuple<char, int, bool>>::edge>>adjacencyList, vector<tuple<char, int, bool>> inVertices) {
+    map<char, int> distances; //Map to return
+    vector<char> visitedVerticies;
+    map<char, int> inVerticesIndexes = {
+        {'S', 0},
+        {'A', 1},
+        {'B', 2},
+        {'C', 3},
+        {'D', 4},
+        {'E', 5},
+        {'F', 6},
+        {'G', 7},
+    };
+
+    //Start on 'S' vertex
+    visitedVerticies.push_back('S');
+    distances.insert({ 'S', 0 });
+    get<1>(inVertices[0]) = 0;
+    get<2>(inVertices[0]) = true;
+
+    while (visitedVerticies.size() < inVertices.size()) {
+
+        for (auto visitingVertex : visitedVerticies) {
+
+            for (auto edge : adjacencyList[inVertices[inVerticesIndexes[visitingVertex]]]) { //Won't fix: I don't have the experience to work with structs; readability will have to suffer
+
+                get<1>(inVertices[inVerticesIndexes[get<0>(edge.first)]]);
+            }
+        }
+    }
+
+    return distances;
 }
 
 int main() { // Test algorithms' implementations
@@ -95,27 +123,27 @@ int main() { // Test algorithms' implementations
 
     // Set up adjacency list
     char vertexNames[8] = { 'S', 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
-    vector<djikstra> vertices;
+    vector<tuple<char, int, bool>> vertices;
     for (auto name : vertexNames) {
-        djikstra vertex{ name, numeric_limits<int>::max(), false };
+        tuple<char, int, bool> vertex{ name, numeric_limits<int>::max(), false };
         vertices.push_back(vertex);
     }
 
-    AdjacencyList djikstrasList(vertices);
-    //djikstrasList.addEdge(vertices[0], vertices[1], 5);
-    //djikstrasList.addEdge(vertices[0], vertices[2], 4);
-    //djikstrasList.addEdge(vertices[1], vertices[2], 1);
-    //djikstrasList.addEdge(vertices[1], vertices[4], 3);
-    //djikstrasList.addEdge(vertices[2], vertices[3], 4);
-    //djikstrasList.addEdge(vertices[2], vertices[5], 5);
-    //djikstrasList.addEdge(vertices[3], vertices[5], 14);
-    //djikstrasList.addEdge(vertices[3], vertices[6], 3);
-    //djikstrasList.addEdge(vertices[3], vertices[7], 8);
-    //djikstrasList.addEdge(vertices[4], vertices[5], 2);
-    //djikstrasList.addEdge(vertices[4], vertices[6], 7);
-    //djikstrasList.addEdge(vertices[4], vertices[7], 12);
-    //djikstrasList.addEdge(vertices[5], vertices[6], 10);
-    //djikstrasList.addEdge(vertices[6], vertices[7], 4);
+    AdjacencyList<tuple<char, int, bool>> djikstrasList(vertices);
+    djikstrasList.addEdge(vertices[0], vertices[1], 5);
+    djikstrasList.addEdge(vertices[0], vertices[2], 4);
+    djikstrasList.addEdge(vertices[1], vertices[2], 1);
+    djikstrasList.addEdge(vertices[1], vertices[4], 3);
+    djikstrasList.addEdge(vertices[2], vertices[3], 4);
+    djikstrasList.addEdge(vertices[2], vertices[5], 5);
+    djikstrasList.addEdge(vertices[3], vertices[5], 14);
+    djikstrasList.addEdge(vertices[3], vertices[6], 3);
+    djikstrasList.addEdge(vertices[3], vertices[7], 8);
+    djikstrasList.addEdge(vertices[4], vertices[5], 2);
+    djikstrasList.addEdge(vertices[4], vertices[6], 7);
+    djikstrasList.addEdge(vertices[4], vertices[7], 12);
+    djikstrasList.addEdge(vertices[5], vertices[6], 10);
+    djikstrasList.addEdge(vertices[6], vertices[7], 4);
 
     // Test algorithm
     cout << "Testing djikstrasAlgorithm():" << endl;
