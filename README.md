@@ -1,4 +1,4 @@
-#Assignment Details
+# Assignment Details
 <div class="description user_content enhanced" data-resource-type="assignment.body" data-resource-id="1549716"><p>Complete the two attached exercises to practice Prim's and Dijkstra's algorithms.</p>
 <p>You can use the powerpoint or pdf format to see the assignment. It may be helpful complete this homework on a computer so you can copy and paste to show each step in your process.</p>
 <p><span class="instructure_file_holder link_holder instructure_file_link_holder"><a class="inline_disabled preview_in_overlay" title="Graph HW.pptx" href="https://smccd.instructure.com/courses/60169/files/11452478?wrap=1" target="_blank" data-canvas-previewable="false" data-api-endpoint="https://smccd.instructure.com/api/v1/courses/60169/files/11452478" data-api-returntype="File">Graph HW.pptx</a><a class="file_download_btn" role="button" download="" style="margin-inline-start: 5px; text-decoration: none;" href="https://smccd.instructure.com/courses/60169/files/11452478/download?download_frd=1"><span role="presentation"><svg viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" style="width:1em; height:1em; vertical-align:middle; fill:currentColor">
@@ -9,5 +9,5 @@
 </svg>
 </span><span class="screenreader-only">Download Graph HW.pdf</span></a></span></p>
 <p>&nbsp;</p></div>
-#Note
+<h1>Note</h1>
 If you've caught on that the assignment was to simulate the algorithms on paper and not implement it, you're right. But hey, this is still pretty cool, right?
